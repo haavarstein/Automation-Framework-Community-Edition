@@ -4,7 +4,8 @@ $StartDTM = (Get-Date)
 $Source = "C:\Source"
 $Target = "C:\Hydration"
 $Share  = "Hydration$"
-$WIM = "D:\Sources\install.wim"
+$Drive = "F:"
+$WIM = "$Drive" + "\Sources\install.wim"
 
 $VMWDrivers = "C:\Program Files\Common Files\VMware\Drivers"
 $XENDrivers = "C:\Program Files\Citrix\XenTools\Drivers"
@@ -44,6 +45,8 @@ Write-Verbose "Downloading $Vendor $Product $Version" -Verbose
 
 Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 (Start-Process "$PackageName" $UnattendedArgs2 -Wait -Passthru).ExitCode
+
+Start-Sleep -s 30
 
 # Windows PE Add-on for ADK 1809
 
@@ -137,7 +140,7 @@ New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root $Target -NetworkPath "
 # $OSGUID = (Get-ItemProperty "DS001:\Operating Systems\WS16DDrive in WS16 WS16.wim").guid
 
 # Use Windows 2016 Evaluation WIM
-$OS = Import-MDTOperatingSystem -Path "DS001:\Operating Systems" -SourcePath "D:\" -DestinationFolder "Windows 2016 X64"
+$OS = Import-MDTOperatingSystem -Path "DS001:\Operating Systems" -SourcePath "$Drive" -DestinationFolder "Windows 2016 X64"
 $OSGUID = (Get-ItemProperty "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim").guid
 
 Write-Verbose "Creating Task Sequences" -Verbose
@@ -290,4 +293,3 @@ Write-Verbose "Stop logging" -Verbose
 $EndDTM = (Get-Date)
 Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalSeconds) Seconds" -Verbose
 Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalMinutes) Minutes" -Verbose
-
