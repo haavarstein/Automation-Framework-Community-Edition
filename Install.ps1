@@ -234,6 +234,7 @@ Add-Content $File "SkipFinalSummary=YES"
 Add-Content $File "AdminPassword=P@ssw0rd"
 Add-Content $File "SkipApplications=YES"
 Add-Content $File "FinishAction=REBOOT"
+Add-Content $File "EventService=http://$IP:9800"
 
 $default = Get-Content $File
 $default.Replace('SkipAdminPassword=NO','SkipAdminPassword=YES') | Out-File $File -Encoding ascii
