@@ -31,13 +31,12 @@ $Version = "10.1.17763.1"
 $uri = "https://go.microsoft.com/fwlink/?linkid=2026036"
 $PackageName = "adksetup.exe"
 $UnattendedArgs1 = '/quiet /layout .\'
-$UnattendedArgs2 = '/quiet /features OptionId.DeploymentTools'
+$UnattendedArgs2 = '/Features OptionId.DeploymentTools /norestart /quiet /ceip off'
 
 Write-Verbose "Downloading $Vendor $Product $Version" -Verbose
  If (!(Test-Path -Path $PackageName)) {
             Invoke-WebRequest -Uri $uri -OutFile "$Source\$PackageName"
             (Start-Process "$PackageName" $UnattendedArgs1 -Wait -Passthru).ExitCode
-            .\adksetup.exe /quiet /layout .\
             }
         Else {
             Write-Verbose "File exists. Skipping Download." -Verbose
@@ -45,8 +44,6 @@ Write-Verbose "Downloading $Vendor $Product $Version" -Verbose
 
 Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 (Start-Process "$PackageName" $UnattendedArgs2 -Wait -Passthru).ExitCode
-
-Start-Sleep -s 30
 
 # Windows PE Add-on for ADK 1809
 
