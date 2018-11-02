@@ -4,7 +4,7 @@ $StartDTM = (Get-Date)
 $Source = "C:\Source"
 $Target = "C:\Hydration"
 $Share  = "Hydration$"
-$Drive = "F:"
+$Drive = "D:"
 $WIM = "$Drive" + "\Sources\install.wim"
 
 $VMWDrivers = "C:\Program Files\Common Files\VMware\Drivers"
@@ -155,6 +155,7 @@ Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - V
 Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - Citrix Receiver, VMware Horizon and Parallels Client" -Template "Server.xml" -Comments "" -ID "CTS-012" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim" -FullName "xenappblog" -OrgName "xenappblog" -HomePage "https://xenappblog.com/blog" -Verbose
 Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - Microsoft RDSH" -Template "Server.xml" -Comments "" -ID "CTS-013" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim" -FullName "xenappblog" -OrgName "xenappblog" -HomePage "https://xenappblog.com/blog" -Verbose
 Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - Microsoft Deployment Server" -Template "Server.xml" -Comments "" -ID "CTS-014" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim" -FullName "xenappblog" -OrgName "xenappblog" -HomePage "https://xenappblog.com/blog" -Verbose
+import-mdttasksequence -path "DS001:\Task Sequences" -Name "Cloud - Domain Controller" -Template "StateRestore.xml" -Comments "" -ID "CTX-015" -Version "1.0" -Verbose
 
 new-item -path "DS001:\Packages" -enable "True" -Name "Windows 2016 x64" -Comments "" -ItemType "folder" -Verbose
 new-item -path "DS001:\Selection Profiles" -enable "True" -Name "Windows 2016 x64" -Comments "" -Definition "<SelectionProfile><Include path=`"Packages\Windows 2016 x64`" /></SelectionProfile>" -ReadOnly "False" -Verbose
@@ -283,6 +284,13 @@ Foreach ($Target in $Targets){
 	$_.name -eq "OSGUID"} | ForEach-Object {$_."#text" = $OSGUID}
     $TSXML.Save($TSPath)
 }
+
+Write-Verbose "Enable Monitoring" -Verbose
+Set-ItemProperty DS001: -Name MonitorHost -Value $IP
+Set-ItemProperty DS001: -Name MonitorEventPort -Value 9800
+Set-ItemProperty DS001: -Name MonitorDataPort -Value 9801
+New-Service -Name "MDT_Monitor" -Description "Microsoft Deployment Toolkit Monitor Service" -BinaryPathName "C:\Program Files\Microsoft Deployment Toolkit\Monitor\Microsoft.BDD.MonitorService.exe" -DisplayName "Microsoft Deployment Toolkit Monitor Service" -StartupType Automatic
+Start-Service -Name "MDT_Monitor"
 
 Write-Verbose "Updating Deployment Share" -Verbose
 update-MDTDeploymentShare -path "DS001:" -Force
