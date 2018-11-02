@@ -130,8 +130,8 @@ Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploy
 
 New-Item -Path $Target -Type Directory
 New-Item -Path $Logs -Type Directory
-New-SmbShare –Name $Share –Path $Target –FullAccess EVERYONE
-New-SmbShare –Name $LogsShare –Path $Logs –FullAccess EVERYONE
+New-SmbShare -Name $Share -Path $Target -FullAccess "EVERYONE"
+New-SmbShare -Name $LogsShare -Path $Logs -FullAccess "EVERYONE"
 
 Write-Verbose "Importing Windows 2016 x64" -Verbose
 New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root $Target -NetworkPath "\\$ENV:COMPUTERNAME\$Share" -Description "Hydration" | Add-MDTPersistentDrive
