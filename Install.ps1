@@ -86,6 +86,22 @@ Invoke-WebRequest -Uri $uri -OutFile "$Source\$PackageName"
 Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 (Start-Process msiexec.exe -ArgumentList $UnattendedArgs -Wait -Passthru).ExitCode
 
+Write-Verbose "Set $Vendor $Product $Version as default Log Viewer" -Verbose
+$registryPath = "HKCU:\Software\Classes\Log.File\shell\open\command"
+$name = "(Default)"
+$value = "`"C:\Program Files (x86)\ConfigMgr 2012 Toolkit R2\ClientTools\CMTrace.exe`" `"%1`""
+
+cmd /c "Reg add HKCU\Software\Classes\.lo /ve /d Log.File /f"
+cmd /c "Reg add HKCU\Software\Classes\.log /ve /d Log.File /f"
+cmd /c "Reg add HKCU\Software\Classes\Log.File\shell\open\command"
+cmd /c "Reg add HKCU\Software\Microsoft\Trace32 /v "Register File Types" /t REG_SZ /d 1"
+
+New-ItemProperty -Path $registryPath `
+    -Name $name `
+    -Value $value `
+    -PropertyType String `
+    -Force | Out-Null
+
 # Microsoft System CLR Types for SQL Server 2012
 $Vendor = "Microsoft"
 $Product = "System CLR Types for SQL Server 2012 (x64)"
