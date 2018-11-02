@@ -141,7 +141,7 @@ New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root $Target -NetworkPath "
 # $OSGUID = (Get-ItemProperty "DS001:\Operating Systems\WS16DDrive in WS16 WS16.wim").guid
 
 # Use Windows 2016 Evaluation WIM
-$OS = Import-MDTOperatingSystem -Path "DS001:\Operating Systems" -SourcePath "$Drive" -DestinationFolder "Windows 2016 X64"
+Import-MDTOperatingSystem -Path "DS001:\Operating Systems" -SourcePath "$Drive" -DestinationFolder "Windows 2016 X64"
 $OSGUID = (Get-ItemProperty "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim").guid
 
 Write-Verbose "Creating Task Sequences" -Verbose
