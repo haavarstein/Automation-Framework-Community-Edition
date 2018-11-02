@@ -226,7 +226,7 @@ copy-item $Source\Templates\* "C:\Program Files\Microsoft Deployment Toolkit\Tem
 copy-item $Source\Samples\* "C:\Program Files\Microsoft Deployment Toolkit\Samples" -Force
 
 Write-Verbose "Customizing CS and Bootstrap" -Verbose
-$ipV4 = Test-Connection -ComputerName (hostname) -Count 2  | Select -ExpandProperty IPV4Address
+$ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select -ExpandProperty IPV4Address
 $ip = $ipV4.IPAddressToString
 $File = "$Target\Control\CustomSettings.ini"
 Add-Content $File "WindowsUpdate=False"
