@@ -3,6 +3,8 @@ $StartDTM = (Get-Date)
 
 $Source = "C:\Source"
 $Target = "C:\Hydration"
+$Logs = "C:\Logs"
+$LogsShare = "Logs$"
 $Share  = "Hydration$"
 $Drive = "D:"
 $WIM = "$Drive" + "\Sources\install.wim"
@@ -127,7 +129,9 @@ Write-Verbose "Configuring Microsoft Deployment Toolkit" -Verbose
 Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploymentToolkit.psd1"
 
 New-Item -Path $Target -Type Directory
+New-Item -Path $Logs -Type Directory
 New-SmbShare –Name $Share –Path $Target –FullAccess EVERYONE
+New-SmbShare –Name $LogsShare –Path $Logs –FullAccess EVERYONE
 
 Write-Verbose "Importing Windows 2016 x64" -Verbose
 New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root $Target -NetworkPath "\\$ENV:COMPUTERNAME\$Share" -Description "Hydration" | Add-MDTPersistentDrive
@@ -222,7 +226,7 @@ copy-item $Source\Templates\* "C:\Program Files\Microsoft Deployment Toolkit\Tem
 copy-item $Source\Samples\* "C:\Program Files\Microsoft Deployment Toolkit\Samples" -Force
 
 Write-Verbose "Customizing CS and Bootstrap" -Verbose
-$ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select -ExpandProperty IPV4Address
+$ipV4 = Test-Connection -ComputerName (hostname) -Count 2  | Select -ExpandProperty IPV4Address
 $ip = $ipV4.IPAddressToString
 $File = "$Target\Control\CustomSettings.ini"
 Add-Content $File "WindowsUpdate=False"
@@ -235,7 +239,8 @@ Add-Content $File "SkipFinalSummary=YES"
 Add-Content $File "AdminPassword=P@ssw0rd"
 Add-Content $File "SkipApplications=YES"
 Add-Content $File "FinishAction=REBOOT"
-Add-Content $File "EventService=http://$IP:9800"
+Add-Content $File "EventService=http://$ip:9800"
+Add-Content $File "SLSHARE=\\$ip\logs$"
 
 $default = Get-Content $File
 $default.Replace('SkipAdminPassword=NO','SkipAdminPassword=YES') | Out-File $File -Encoding ascii
