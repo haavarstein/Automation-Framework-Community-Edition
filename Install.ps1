@@ -176,6 +176,8 @@ Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - C
 Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - Microsoft RDSH" -Template "Server.xml" -Comments "" -ID "CTS-013" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim" -FullName "xenappblog" -OrgName "xenappblog" -HomePage "https://xenappblog.com/blog" -Verbose
 Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - Microsoft Deployment Server" -Template "Server.xml" -Comments "" -ID "CTS-014" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim" -FullName "xenappblog" -OrgName "xenappblog" -HomePage "https://xenappblog.com/blog" -Verbose
 import-mdttasksequence -path "DS001:\Task Sequences" -Name "Cloud - Domain Controller" -Template "StateRestore.xml" -Comments "" -ID "CTX-015" -Version "1.0" -Verbose
+import-mdttasksequence -path "DS001:\Task Sequences" -Name "Cloud - Automation Framework" -Template "StateRestore.xml" -Comments "" -ID "CTX-016" -Version "1.0" -Verbose
+
 
 new-item -path "DS001:\Packages" -enable "True" -Name "Windows 2016 x64" -Comments "" -ItemType "folder" -Verbose
 new-item -path "DS001:\Selection Profiles" -enable "True" -Name "Windows 2016 x64" -Comments "" -Definition "<SelectionProfile><Include path=`"Packages\Windows 2016 x64`" /></SelectionProfile>" -ReadOnly "False" -Verbose
