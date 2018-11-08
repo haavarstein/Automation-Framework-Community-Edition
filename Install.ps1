@@ -131,8 +131,8 @@ Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 # NotePad ++
 $Vendor = "Misc"
 $Product = "Notepad++"
-$Version = "7.5.6"
-$uri = "https://notepad-plus-plus.org/repository/7.x/7.5.6/npp.7.5.6.Installer.x64.exe"
+$Version = "7.5.9"
+$uri = "https://notepad-plus-plus.org/repository/7.x/7.5.9/npp.7.5.9.Installer.x64.exe"
 $PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
 $UnattendedArgs = '/S'
 
@@ -177,7 +177,6 @@ Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - M
 Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2016 x64 - Automation Framework" -Template "Server.xml" -Comments "" -ID "CTS-014" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Windows Server 2016 SERVERSTANDARD in Windows 2016 X64 install.wim" -FullName "xenappblog" -OrgName "xenappblog" -HomePage "https://xenappblog.com/blog" -Verbose
 import-mdttasksequence -path "DS001:\Task Sequences" -Name "Cloud - Domain Controller" -Template "StateRestore.xml" -Comments "" -ID "CTX-015" -Version "1.0" -Verbose
 import-mdttasksequence -path "DS001:\Task Sequences" -Name "Cloud - Automation Framework" -Template "StateRestore.xml" -Comments "" -ID "CTX-016" -Version "1.0" -Verbose
-
 
 new-item -path "DS001:\Packages" -enable "True" -Name "Windows 2016 x64" -Comments "" -ItemType "folder" -Verbose
 new-item -path "DS001:\Selection Profiles" -enable "True" -Name "Windows 2016 x64" -Comments "" -Definition "<SelectionProfile><Include path=`"Packages\Windows 2016 x64`" /></SelectionProfile>" -ReadOnly "False" -Verbose
