@@ -1,0 +1,14 @@
+<POST>
+	<VCenter>192.168.2.18</VCenter>
+	<VCUser>root</VCUser>
+	<VCPwd>P@ssw0rd</VCPwd>
+	<VMDiskType>Thin</VMDiskType>
+	<VMDS>NVMe</VMDS>
+	<VMCluster>LAB</VMCluster>
+	<VMFolder>DEV</VMFolder>
+	<NICType>Vmxnet3</NICType>
+	<NetName>Internal</NetName>
+	<ISO>[SSD]\ISO\Hydration.iso</ISO>
+	<ESXi>192.168.2.18</ESXi>	
+	<VMGuestOS>windows9Server64Guest</VMGuestOS>	
+</POST>

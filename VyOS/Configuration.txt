@@ -1,0 +1,45 @@
+configure
+set system host-name GW-01
+set interfaces ethernet eth0 address dhcp
+set interfaces ethernet eth0 description External
+set interfaces ethernet eth1 address 192.168.1.1/24
+set interfaces ethernet eth1 description Internal
+set service ssh
+
+set protocols static route 0.0.0.0/0 next-hop 192.168.2.1
+set nat source rule 5010 outbound-interface eth0
+set nat source rule 5010 source address 192.168.1.0/24
+set nat source rule 5010 translation address masquerade
+
+set service dns forwarding name-server 8.8.8.8
+set service dns forwarding cache-size 150
+set service dns forwarding listen-on eth1
+
+set nat destination rule 10 inbound-interface eth0
+set nat destination rule 10 destination port 3389
+set nat destination rule 10 description 'RDP to 192.168.1.10'
+set nat destination rule 10 protocol tcp
+set nat destination rule 10 translation address 192.168.1.10
+
+set nat destination rule 11 inbound-interface eth0
+set nat destination rule 11 destination port 27000
+set nat destination rule 11 description 'Citrix License Server to 192.168.1.14'
+set nat destination rule 11 protocol tcp
+set nat destination rule 11 translation address 192.168.1.14
+
+set nat destination rule 12 inbound-interface eth0
+set nat destination rule 12 destination port 7279
+set nat destination rule 12 description 'Check-in/check-out of Citrix licenses to 192.168.1.14'
+set nat destination rule 12 protocol tcp
+set nat destination rule 12 translation address 192.168.1.14
+
+set nat destination rule 13 inbound-interface eth0
+set nat destination rule 13 destination port 443
+set nat destination rule 13 description 'Citrix Netscaler Unified Gateway'
+set nat destination rule 13 protocol tcp
+set nat destination rule 13 translation address 192.168.1.252
+
+commit
+save
+exit
+

@@ -1,0 +1,36 @@
+AFCE 1.6.6
+
+- Added Windows ADK 1803 & PE Add-On
+- Added MDT Monitoring
+- Added all applications script from my Github repo
+- Added Create OU Structure, Import GPO Starter Pack and Link GPO to OU in DC Task Sequence
+- Added Domain Controller Task Sequence for Cloud useage (State-Restore)
+- Added Create MDT Users
+
+AFCE 1.6.6
+
+- Minor bug fixes
+
+AFCE 1.6.4
+
+- Speed up the download - disable progress bar
+
+AFCE 1.6.3
+
+- Fixed bug with wrong WinPE location for Nutanix Drivers
+
+AFCE 1.6.2
+
+- Fixed bug in Wildcard Certificate, SSL.ini was missing SERVERFQDN
+- Added missing Export Wildcard Certificates to all formats
+- Added Task Sequence for (MY) custom MDT server
+
+AFCE 1.6.1
+
+- Added PowerShell & .NET Framwork to Boot Image
+- Added PowerCfg.exe to Boot Image
+- Set Power Profile to High Performance for all Task Sequences (Speed up Install OS task)
+- Added Settings.xml to .\Scripts to set custom Domain Name
+- Import WinPE drivers based on VM tools installed on Hydration Server
+- Domain Controller stuff is now being logged to C:\Windows\Temp
+
