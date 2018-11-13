@@ -5,7 +5,13 @@ Automation Framework Community Edition (AFCE)
 3. Mount ISO to D:
 4. Run C:\Source\Install.ps1
 
-To deploy the full Automation Framework with AFCE
+Deploy Domain Controller with AFCE
+
+1. Set the local password to the same on all VMs (this applies to Cloud) : net user administrator YOURLOCALPASSWORD
+2. Set Domain Name and Reverse Lookup IP Address in .\Applications\Scripts\Settings.xml
+3. Set DHCP Scope in .\Applications\Scripts\DHCP-vendor.ps1
+
+Deploy Automation Framework with AFCE
 
 1. Set the local password to the same on all VMs (this applies to Cloud) : net user administrator YOURLOCALPASSWORD
 2. Set Computername and Join Domain
