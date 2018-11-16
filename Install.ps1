@@ -144,8 +144,11 @@ Write-Verbose "Configuring Microsoft Deployment Toolkit" -Verbose
 
 Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploymentToolkit.psd1"
 
+ If (!(Test-Path -Path $Logs)) {
+    New-Item -Path $Logs -Type Directory
+            }
+
 New-Item -Path $Target -Type Directory
-New-Item -Path $Logs -Type Directory
 New-SmbShare -Name $Share -Path $Target -FullAccess "EVERYONE"
 New-SmbShare -Name $LogsShare -Path $Logs -FullAccess "EVERYONE"
 
@@ -243,7 +246,7 @@ copy-item $Source\Templates\* "C:\Program Files\Microsoft Deployment Toolkit\Tem
 copy-item $Source\Samples\* "C:\Program Files\Microsoft Deployment Toolkit\Samples" -Force
 
 Write-Verbose "Customizing CS and Bootstrap" -Verbose
-$ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select -ExpandProperty IPV4Address
+$ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select-Object -ExpandProperty IPV4Address
 $ip = $ipV4.IPAddressToString
 $File = "$Target\Control\CustomSettings.ini"
 Add-Content $File "WindowsUpdate=False"
@@ -308,6 +311,7 @@ Foreach ($Target in $Targets){
 }
 
 Write-Verbose "Enable Monitoring" -Verbose
+New-NetFirewallRule -Name "MDT_Monitor (Inbound,TCP)" -DisplayName "MDT_Monitor (Inbound,TCP)" -Description "Inbound rules for the TCP protocol for MDT_Monitor" -LocalPort 9800 -Protocol "TCP" -Direction "Inbound" -Action "Allow"
 Set-ItemProperty DS001: -Name MonitorHost -Value $IP
 Set-ItemProperty DS001: -Name MonitorEventPort -Value 9800
 Set-ItemProperty DS001: -Name MonitorDataPort -Value 9801
