@@ -17,6 +17,6 @@ Deploy Automation Framework with AFCE
 2. Set Computername and Join Domain
 2. Add the local password to CustomSettings.ini => AdminPassword=YOURLOCALPASSWORD
 3. Set Run As Domain & Password in the Automation Framework Task Sequence (The Tasks with White Icon)
-4. Cut / Paste the Windows 2016 ISO into .\Applications\Misc\Automation Framework
+4. Cut / Paste the Windows 2019 ISO into .\Applications\Misc\Automation Framework
 5. Add the licensed Install.ps1 (AF) into the same folder.
 6. Run cscript \\HYDRATIONSERVERIP\Hydration$\scripts\litetouch.wsf (Cloud Only - Disable Firewall on Hydration Server)
