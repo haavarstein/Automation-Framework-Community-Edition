@@ -13,7 +13,7 @@ Deploy Domain Controller with AFCE
 
 Deploy Automation Framework with AFCE
 
-1. Set the local password to the same on all VMs (this applies to Cloud) : net user administrator YOURLOCALPASSWORD
+1. Set the local password to the same on all VMs (this applies only to Cloud) : net user administrator YOURLOCALPASSWORD
 2. Set Computername and Join Domain
 2. Add the local password to CustomSettings.ini => AdminPassword=YOURLOCALPASSWORD
 3. Set Run As Domain & Password in the Automation Framework Task Sequence (The Tasks with White Icon)
