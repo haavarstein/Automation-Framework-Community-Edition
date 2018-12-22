@@ -1,17 +1,17 @@
-Automation Framework Community Edition (AFCE)
+# Automation Framework Community Edition (AFCE)
 
 1. Download repo ZIP and extract to C:\Source
 2. Download Windows 2019 DataCenter Evaluation : https://www.microsoft.com/en-us/cloud-platform/windows-server-trial
 3. Mount ISO and set correct drive letter in .\Install.ps1
 4. Run C:\Source\Install.ps1
 
-Deploy Domain Controller with AFCE
+# Deploy Domain Controller with AFCE
 
 1. Set the local password to the same on all VMs (this applies only to Cloud) : net user administrator YOURLOCALPASSWORD
 2. Set Domain Name and Reverse Lookup IP Address in .\Applications\Scripts\Settings.xml
 3. Set DHCP Scope in .\Applications\Scripts\DHCP-vendor.ps1
 
-Deploy Automation Framework with AFCE
+# Deploy Automation Framework with AFCE
 
 1. Set the local password to the same on all VMs (this applies only to Cloud) : net user administrator YOURLOCALPASSWORD
 2. Set Computername and Join Domain
@@ -21,7 +21,7 @@ Deploy Automation Framework with AFCE
 5. Add the licensed Install.ps1 (AF) into the same folder.
 6. Run cscript \\HYDRATIONSERVERIP\Hydration$\scripts\litetouch.wsf (Cloud Only - Disable Firewall on Hydration Server)
 
-* Download and Extract
+# Download and Extract
 
 [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
 wget -uri https://github.com/haavarstein/Automation-Framework-Community-Edition/archive/master.zip -OutFile C:\Windows\Temp\Master.zip
