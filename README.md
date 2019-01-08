@@ -30,3 +30,4 @@ wget -uri https://github.com/haavarstein/Automation-Framework-Community-Edition/
 Expand-Archive -Path C:\Windows\Temp\Master.zip -DestinationPath C:\
 
 ren "C:\Automation-Framework-Community-Edition-master" "C:\Source"
+
