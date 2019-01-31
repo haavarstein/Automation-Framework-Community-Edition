@@ -93,8 +93,8 @@ $value = "`"C:\Program Files (x86)\ConfigMgr 2012 Toolkit R2\ClientTools\CMTrace
 
 cmd /c "Reg add HKCU\Software\Classes\.lo /ve /d Log.File /f"
 cmd /c "Reg add HKCU\Software\Classes\.log /ve /d Log.File /f"
-cmd /c "Reg add HKCU\Software\Classes\Log.File\shell\open\command"
-cmd /c "Reg add HKCU\Software\Microsoft\Trace32 /v "Register File Types" /t REG_SZ /d 1"
+cmd /c "Reg add HKCU\Software\Classes\Log.File\shell\open\command /f"
+cmd /c "Reg add HKCU\Software\Microsoft\Trace32 /v "Register File Types" /t REG_SZ /d 1 /f"
 
 New-ItemProperty -Path $registryPath `
     -Name $name `
