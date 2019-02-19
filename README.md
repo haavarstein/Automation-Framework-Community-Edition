@@ -22,9 +22,13 @@
 6. Run cscript \\HYDRATIONSERVERIP\Hydration$\scripts\litetouch.wsf (Cloud Only - Disable Firewall on Hydration Server)
 
 # Download and Extract
-
+```
 [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
+```
 wget -uri https://github.com/haavarstein/Automation-Framework-Community-Edition/archive/master.zip -OutFile C:\Windows\Temp\Master.zip
+```
 Expand-Archive -Path C:\Windows\Temp\Master.zip -DestinationPath C:\
+```
 ren "C:\Automation-Framework-Community-Edition-master" "C:\Source"
+```
 
