@@ -2,7 +2,7 @@
 
 Import-Module PSAdmin
 Set-NetFirewallProfile -Profile Domain -Enabled False
-$Server = "ras-01.ctxlab.local"
+$Server = "pras-01.ctxlab.local"
 $User = "administrator@ctxlab.local"
 $Pwd = "P@ssw0rd"
 $Password = ConvertTo-SecureString $Pwd -AsPlainText -Force
@@ -17,6 +17,7 @@ New-RDSGroup -Name "Windows 2016 RDS" -RDSObject $RDSList
 Set-RDSDefaultSettings -MaxSessions 100 -EnableAppMonitoring $true
 New-PubRDSDesktop -Name "Desktop"
 Set-RASTurboSettings -Enable $True
+Set-2FA -Provider GAuthTOTP
 Invoke-LicenseActivate -email $Email -Password $EmailPassword
 Invoke-Apply
 
