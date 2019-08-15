@@ -16,7 +16,7 @@ $RDSList = Get-RDS
 New-RDSGroup -Name "Windows 2016 RDS" -RDSObject $RDSList
 Set-RDSDefaultSettings -MaxSessions 100 -EnableAppMonitoring $true
 New-PubRDSDesktop -Name "Desktop"
-Set-RASTurboSettings -Enable $True
+Set-RASTurboSettings -Enable $False
 Set-2FA -Provider GAuthTOTP
 Invoke-LicenseActivate -email $Email -Password $EmailPassword
 Invoke-Apply
