@@ -34,3 +34,6 @@ AFCE 1.6.1
 - Import WinPE drivers based on VM tools installed on Hydration Server
 - Domain Controller stuff is now being logged to C:\Windows\Temp
 
+AFCE 1.8
+
+- Added Additional Domain Controller
