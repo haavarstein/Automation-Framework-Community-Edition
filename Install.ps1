@@ -247,6 +247,13 @@ Expand-Archive -Path $PackageName -DestinationPath .\
 copy-item $Source\Templates\* "C:\Program Files\Microsoft Deployment Toolkit\Templates" -Force
 copy-item $Source\Samples\* "C:\Program Files\Microsoft Deployment Toolkit\Samples" -Force
 
+Write-Verbose "Downloading EverGreen Applications from Github" -Verbose
+$uri = "https://github.com/haavarstein/Applications/archive/master.zip"
+$PackageName = "Applications-master.zip"
+Invoke-WebRequest -Uri $uri -OutFile "$Source\$PackageName"
+Expand-Archive -Path $PackageName -DestinationPath . -Force
+cmd /C "xcopy $Source\Applications-master $Target\Applications\ /h/i/c/k/e/r/y/q"
+
 Write-Verbose "Customizing CS and Bootstrap" -Verbose
 $ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select-Object -ExpandProperty IPV4Address
 $ip = $ipV4.IPAddressToString
