@@ -1,5 +1,3 @@
-Set-ExecutionPolicy Bypass -Force
-
 Write-Verbose "Setting Arguments" -Verbose
 $StartDTM = (Get-Date)
 
@@ -8,7 +6,7 @@ $Target = "C:\Hydration"
 $Logs = "C:\Logs"
 $LogsShare = "Logs$"
 $Share  = "Hydration$"
-$Drive = "D:"
+$Drive = "B:"
 $WIM = "$Drive" + "\Sources\install.wim"
 
 $VMWDrivers = "C:\Program Files\Common Files\VMware\Drivers"
@@ -147,12 +145,12 @@ Write-Verbose "Configuring Microsoft Deployment Toolkit" -Verbose
 Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploymentToolkit.psd1"
 
  If (!(Test-Path -Path $Logs)) {
-    New-Item -Path $Logs -Type Directory
+    New-Item -Path $Logs -Type Directory -ErrorAction SilentlyContinue
             }
 
 New-Item -Path $Target -Type Directory
-New-SmbShare -Name $Share -Path $Target -FullAccess "EVERYONE"
-New-SmbShare -Name $LogsShare -Path $Logs -FullAccess "EVERYONE"
+New-SmbShare -Name $Share -Path $Target -FullAccess "EVERYONE" -ErrorAction SilentlyContinue
+New-SmbShare -Name $LogsShare -Path $Logs -FullAccess "EVERYONE" -ErrorAction SilentlyContinue
 
 Write-Verbose "Importing Windows 2019 x64" -Verbose
 New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root $Target -NetworkPath "\\$ENV:COMPUTERNAME\$Share" -Description "Hydration" | Add-MDTPersistentDrive
@@ -327,7 +325,7 @@ New-NetFirewallRule -Name "MDT_Monitor (Inbound,TCP)" -DisplayName "MDT_Monitor 
 Set-ItemProperty DS001: -Name MonitorHost -Value $IP
 Set-ItemProperty DS001: -Name MonitorEventPort -Value 9800
 Set-ItemProperty DS001: -Name MonitorDataPort -Value 9801
-New-Service -Name "MDT_Monitor" -Description "Microsoft Deployment Toolkit Monitor Service" -BinaryPathName "C:\Program Files\Microsoft Deployment Toolkit\Monitor\Microsoft.BDD.MonitorService.exe" -DisplayName "Microsoft Deployment Toolkit Monitor Service" -StartupType Automatic
+New-Service -Name "MDT_Monitor" -Description "Microsoft Deployment Toolkit Monitor Service" -BinaryPathName "C:\Program Files\Microsoft Deployment Toolkit\Monitor\Microsoft.BDD.MonitorService.exe" -DisplayName "Microsoft Deployment Toolkit Monitor Service" -StartupType Automatic -ErrorAction SilentlyContinue
 Start-Service -Name "MDT_Monitor"
 
 Write-Verbose "Updating Deployment Share" -Verbose
