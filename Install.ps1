@@ -7,7 +7,7 @@ $Target = "C:\Hydration"
 $Logs = "C:\Logs"
 $LogsShare = "Logs$"
 $Share  = "Hydration$"
-$Drive = "B:"
+$Drive = "D:"
 $WIM = "$Drive" + "\Sources\install.wim"
 
 $VMWDrivers = "C:\Program Files\Common Files\VMware\Drivers"
