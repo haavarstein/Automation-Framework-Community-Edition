@@ -26,11 +26,11 @@ Write-Verbose "Disable IE Security" -Verbose
 reg add "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}" /v IsInstalled /t REG_DWORD /d 0 /f
 reg add "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}" /v IsInstalled /t REG_DWORD /d 0 /f
 
-# Windows ADK for Windows 10, version 1809
+# Windows ADK for Windows 10
 $Vendor = "Microsoft"
 $Product = "ADK for Windows 10"
-$Version = "10.1.17763.1"
-$uri = "https://go.microsoft.com/fwlink/?linkid=2026036"
+$Version = "2004"
+$uri = "https://go.microsoft.com/fwlink/?linkid=2120254"
 $PackageName = "adksetup.exe"
 $UnattendedArgs1 = '/quiet /layout .\'
 $UnattendedArgs2 = '/Features OptionId.DeploymentTools /norestart /quiet /ceip off'
@@ -47,12 +47,12 @@ Write-Verbose "Downloading $Vendor $Product $Version" -Verbose
 Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 (Start-Process "$PackageName" $UnattendedArgs2 -Wait -Passthru).ExitCode
 
-# Windows PE Add-on for ADK 1809
+# Windows PE Add-on for ADK
 
 $Vendor = "Microsoft"
 $Product = "Windows PE add-on for ADK"
-$Version = "10.1.17763.1"
-$uri = "https://go.microsoft.com/fwlink/?linkid=2022233"
+$Version = "2004"
+$uri = "https://go.microsoft.com/fwlink/?linkid=2120253"
 $PackageName = "adkwinpesetup.exe"
 $UnattendedArgs = '/Features OptionId.WindowsPreinstallationEnvironment /norestart /quiet /ceip off'
 
@@ -131,8 +131,8 @@ Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 # NotePad ++
 $Vendor = "Misc"
 $Product = "Notepad++"
-$Version = "7.8.1"
-$uri = "http://download.notepad-plus-plus.org/repository/7.x/7.8.1/npp.7.8.1.Installer.x64.exe"
+$Version = "7.8.9"
+$uri = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.9/npp.7.8.9.Installer.x64.exe"
 $PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
 $UnattendedArgs = '/S'
 
