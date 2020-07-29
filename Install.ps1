@@ -145,9 +145,7 @@ Write-Verbose "Configuring Microsoft Deployment Toolkit" -Verbose
 
 Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploymentToolkit.psd1"
 
- If (!(Test-Path -Path $Logs)) {
-    New-Item -Path $Logs -Type Directory -ErrorAction SilentlyContinue
-            }
+If (!(Test-Path -Path $Logs)) {New-Item -Path $Logs -Type Directory -ErrorAction SilentlyContinue | Out-Null }
 
 New-Item -Path $Target -Type Directory -ErrorAction SilentlyContinue
 New-SmbShare -Name $Share -Path $Target -FullAccess "EVERYONE" -ErrorAction SilentlyContinue
