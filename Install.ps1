@@ -245,7 +245,7 @@ if( (Test-Path -Path $NTXDrivers ) )
 $uri = "http://xenapptraining.s3.amazonaws.com/Hydration/Templates.zip"
 $PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
 Invoke-WebRequest -Uri $uri -OutFile "$Source\$PackageName"
-Expand-Archive -Path $PackageName -DestinationPath .\
+Expand-Archive -Path $PackageName -DestinationPath .\ -Force
 copy-item $Source\Templates\* "C:\Program Files\Microsoft Deployment Toolkit\Templates" -Force
 copy-item $Source\Samples\* "C:\Program Files\Microsoft Deployment Toolkit\Samples" -Force
 
@@ -323,7 +323,7 @@ Foreach ($Target in $Targets){
 }
 
 Write-Verbose "Enable Monitoring" -Verbose
-New-NetFirewallRule -Name "MDT_Monitor (Inbound,TCP)" -DisplayName "MDT_Monitor (Inbound,TCP)" -Description "Inbound rules for the TCP protocol for MDT_Monitor" -LocalPort 9800 -Protocol "TCP" -Direction "Inbound" -Action "Allow"
+New-NetFirewallRule -Name "MDT_Monitor (Inbound,TCP)" -DisplayName "MDT_Monitor (Inbound,TCP)" -Description "Inbound rules for the TCP protocol for MDT_Monitor" -LocalPort 9800 -Protocol "TCP" -Direction "Inbound" -Action "Allow" -ErrorAction SilentlyContinue
 Set-ItemProperty DS001: -Name MonitorHost -Value $IP
 Set-ItemProperty DS001: -Name MonitorEventPort -Value 9800
 Set-ItemProperty DS001: -Name MonitorDataPort -Value 9801
