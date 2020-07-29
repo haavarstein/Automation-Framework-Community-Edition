@@ -1,3 +1,4 @@
+Clear-Host
 Write-Verbose "Setting Arguments" -Verbose
 $StartDTM = (Get-Date)
 
@@ -148,11 +149,12 @@ Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploy
     New-Item -Path $Logs -Type Directory -ErrorAction SilentlyContinue
             }
 
-New-Item -Path $Target -Type Directory
+New-Item -Path $Target -Type Directory -ErrorAction SilentlyContinue
 New-SmbShare -Name $Share -Path $Target -FullAccess "EVERYONE" -ErrorAction SilentlyContinue
 New-SmbShare -Name $LogsShare -Path $Logs -FullAccess "EVERYONE" -ErrorAction SilentlyContinue
 
 Write-Verbose "Importing Windows 2019 x64" -Verbose
+Remove-PSDrive -Name "DS001" -Force -ErrorAction SilentlyContinue
 New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root $Target -NetworkPath "\\$ENV:COMPUTERNAME\$Share" -Description "Hydration" | Add-MDTPersistentDrive
 
 # Use Custom WIM - Remember to Change under Task Sequences as well
