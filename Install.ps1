@@ -1,3 +1,5 @@
+Set-ExecutionPolicy Bypass -Force
+
 Write-Verbose "Setting Arguments" -Verbose
 $StartDTM = (Get-Date)
 
@@ -13,7 +15,7 @@ $VMWDrivers = "C:\Program Files\Common Files\VMware\Drivers"
 $XENDrivers = "C:\Program Files\Citrix\XenTools\Drivers"
 $NTXDrivers = "C:\Program Files\Nutanix\VirtIO"
 
-Set-ExecutionPolicy Bypass -Force
+CD $Source
 
 # Speed up the download - disable progress bar
 $ProgressPreference = 'SilentlyContinue'
