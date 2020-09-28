@@ -182,7 +182,6 @@ Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2019 x64 - A
 import-mdttasksequence -path "DS001:\Task Sequences" -Name "Cloud - Domain Controller" -Template "StateRestore.xml" -Comments "" -ID "CTX-015" -Version "1.0" -Verbose
 import-mdttasksequence -path "DS001:\Task Sequences" -Name "Cloud - Automation Framework" -Template "StateRestore.xml" -Comments "" -ID "CTX-016" -Version "1.0" -Verbose
 
-
 new-item -path "DS001:\Packages" -enable "True" -Name "Windows 2019 x64" -Comments "" -ItemType "folder" -Verbose
 new-item -path "DS001:\Selection Profiles" -enable "True" -Name "Windows 2019 x64" -Comments "" -Definition "<SelectionProfile><Include path=`"Packages\Windows 2019 x64`" /></SelectionProfile>" -ReadOnly "False" -Verbose
 new-item -path "DS001:\Applications" -enable "True" -Name "Adobe" -Comments "" -ItemType "folder" -Verbose
@@ -331,6 +330,14 @@ Start-Service -Name "MDT_Monitor"
 
 Write-Verbose "Updating Deployment Share" -Verbose
 update-MDTDeploymentShare -path "DS001:" -Force
+
+Write-Verbose "Configuring Windows Deployment Services" -Verbose
+Install-WindowsFeature wds-deployment -includemanagementtools
+$wdsUtilResults = wdsutil /initialize-server /remInst:"$WDS"
+$wdsUtilResults | select -last 1
+Import-WdsBootImage -Path "$Target\Boot\LiteTouchPE_x64.wim"
+wdsutil.exe /Set-Server /AnswerClients:All
+wdsutil.exe /Set-Server /PxepromptPolicy /New:Noprompt
 
 Write-Verbose "Stop logging" -Verbose
 $EndDTM = (Get-Date)
