@@ -295,7 +295,7 @@ $xml.Settings.'Boot.x64.LiteTouchISOName' = "$env:computername.iso"
 $xml.Settings.'Boot.x64.IncludeAllDrivers' = "True"
 $xml.Settings.'Boot.x64.SelectionProfile' = "WinPE 5.0 x64"
 $xml.Settings.'Boot.x64.FeaturePacks' = "winpe-mdac,winpe-netfx,winpe-powershell"
-$xml.Settings.'Boot.x64.ExtraDirectory' = "%DEPLOYROOT\Applications\Extras\x64"
+$xml.Settings.'Boot.x64.ExtraDirectory' = "%DEPLOYROOT%\Applications\Extras\x64"
 $xml.Settings.'SupportX86' = "False"
 $xml.Settings.'UNCPath' = "\\$IP\$Share"
 $xml.Save($xmlfile)
