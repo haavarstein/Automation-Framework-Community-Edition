@@ -4,6 +4,7 @@ $StartDTM = (Get-Date)
 
 $Source = "C:\Source"
 $Target = "C:\Hydration"
+$WDS = "C:\WDS"
 $Logs = "C:\Logs"
 $LogsShare = "Logs$"
 $Share  = "Hydration$"
