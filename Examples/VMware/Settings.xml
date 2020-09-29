@@ -1,14 +1,14 @@
 <POST>
 	<VCenter></VCenter>
 	<VCUser>root</VCUser>
-	<VCPwd></VCPwd>
+	<VCPwd>Xenappadmin2020!</VCPwd>
 	<VMDiskType>Thin</VMDiskType>
-	<VMDS>ESXi-01-SSD</VMDS>
+	<VMDS>ESXi-02-SSD</VMDS>
 	<VMCluster>LAB</VMCluster>
 	<VMFolder>DEV</VMFolder>
 	<NICType>Vmxnet3</NICType>
 	<NetName>LAN</NetName>
 	<ISO></ISO>
-	<ESXi>10.100.130.31</ESXi>	
+	<ESXi>10.100.130.32</ESXi>	
 	<VMGuestOS>windows2019srv_64Guest</VMGuestOS>	
 </POST>

@@ -77,8 +77,8 @@ if (!(Get-Module -ListAvailable -Name VMware.PowerCLI)) {Install-Module -Name VM
 
 # Add Module
 Import-Module VMware.DeployAutomation
-Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -ErrorAction SilentlyContinue
-Set-PowerCLIConfiguration -Scope User -InvalidCertificateAction Ignore -ErrorAction SilentlyContinue
+#Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -ErrorAction SilentlyContinue
+#Set-PowerCLIConfiguration -Scope User -InvalidCertificateAction Ignore -ErrorAction SilentlyContinue
 
 # Connect to vCenter Server
 Connect-viserver $VCenter -user $VCUser -password $VCPwd -WarningAction 0
@@ -92,9 +92,10 @@ $VCPU = 2
 $VMDiskGB = 40
 
 $LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
-Start-Transcript $LogPS
+Start-Transcript $LogPS | Out-Null
 
 New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
+Start-Sleep -s 15
 Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
 
 $VM = Get-VM $VMName

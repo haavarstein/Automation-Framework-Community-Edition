@@ -3,11 +3,11 @@
     "__comments": "Sample template to deploy a vCenter Server Appliance with an embedded Platform Services Controller on an ESXi host.",
     "new.vcsa": {
         "esxi": {
-            "hostname": "nuc06.ctxlab.local",
+            "hostname": "10.100.130.32",
             "username": "root",
-            "password": "P@ssw0rd",
-            "deployment.network": "Internal",
-            "datastore": "SSD"
+            "password": "Xenappadmin2020!",
+            "deployment.network": "LAN",
+            "datastore": "ESXi-02-SSD"
         },
         "appliance": {
             "thin.disk.mode": true,
@@ -17,13 +17,13 @@
         "network": {
             "ip.family": "ipv4",
             "mode": "static",
-            "ip": "192.168.1.200",
+            "ip": "192.168.10.200",
             "dns.servers": [
-                "192.168.1.10"
+                "192.168.10.10"
             ],
             "prefix": "24",
-            "gateway": "192.168.1.1",
-            "system.name": "vcsa.ctxlab.local"
+            "gateway": "192.168.10.1",
+            "system.name": "vcsa.desktopanywhere.io"
         },
         "os": {
             "password": "P@ssw0rd",
@@ -32,7 +32,7 @@
         "sso": {
             "password": "P@ssw0rd",
             "domain-name": "vsphere.local",
-            "site-name": "Fortaleza"
+            "site-name": "Master Class"
         }
     },
     "ceip": {
