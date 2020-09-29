@@ -1,5 +1,5 @@
 <POST>
-	<VCenter>10.100.130.31</VCenter>
+	<VCenter></VCenter>
 	<VCUser>root</VCUser>
 	<VCPwd></VCPwd>
 	<VMDiskType>Thin</VMDiskType>
