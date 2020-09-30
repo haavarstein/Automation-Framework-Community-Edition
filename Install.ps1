@@ -334,7 +334,7 @@ update-MDTDeploymentShare -path "DS001:" -Force
 
 Write-Verbose "Configuring Windows Deployment Services" -Verbose
 Install-WindowsFeature wds-deployment -includemanagementtools
-$wdsUtilResults = wdsutil /initialize-server /remInst:"$WDS"
+$wdsUtilResults = wdsutil /initialize-server /remInst:"$WDS" /Standalone
 $wdsUtilResults | select -last 1
 Import-WdsBootImage -Path "$Target\Boot\LiteTouchPE_x64.wim"
 wdsutil.exe /Set-Server /AnswerClients:All
