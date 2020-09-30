@@ -27,5 +27,7 @@
 wget -uri https://github.com/haavarstein/Automation-Framework-Community-Edition/archive/master.zip -OutFile C:\Windows\Temp\Master.zip
 Expand-Archive -Path C:\Windows\Temp\Master.zip -DestinationPath C:\
 ren "C:\Automation-Framework-Community-Edition-master" "C:\Source"
+CD "C:\Source"
+
 ```
 
