@@ -1,7 +1,7 @@
 <POST>
-	<VCenter></VCenter>
+	<VCenter>10.100.130.32</VCenter>
 	<VCUser>root</VCUser>
-	<VCPwd>Xenappadmin2020!</VCPwd>
+	<VCPwd></VCPwd>
 	<VMDiskType>Thin</VMDiskType>
 	<VMDS>ESXi-02-SSD</VMDS>
 	<VMCluster>LAB</VMCluster>
