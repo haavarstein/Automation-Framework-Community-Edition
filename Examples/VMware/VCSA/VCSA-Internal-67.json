@@ -5,7 +5,7 @@
         "esxi": {
             "hostname": "10.100.130.32",
             "username": "root",
-            "password": "Xenappadmin2020!",
+            "password": "",
             "deployment.network": "LAN",
             "datastore": "ESXi-02-SSD"
         },
