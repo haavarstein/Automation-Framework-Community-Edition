@@ -196,6 +196,28 @@ Get-VM -Name $VMName | Set-SecureBoot -Enabled
 Start-Sleep -s 15
 Start-VM -VM $VMName -confirm:$false -RunAsync
 
+# MDT-01
+
+$VMName = "CA-01"
+$MAC = "00:50:56:00:50:06"
+$VRAM = 2048
+$VCPU = 2
+$VMDiskGB = 40
+
+$LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
+Start-Transcript $LogPS
+
+New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
+Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
+
+$VM = Get-VM $VMName
+$spec = New-Object VMware.Vim.VirtualMachineConfigSpec
+$spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
+$vm.ExtensionData.ReconfigVM($spec)
+Get-VM -Name $VMName | Set-SecureBoot -Enabled
+Start-Sleep -s 15
+Start-VM -VM $VMName -confirm:$false -RunAsync
+
 Write-Verbose "Stop logging" -Verbose
 $EndDTM = (Get-Date)
 Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalSeconds) Seconds" -Verbose
