@@ -333,14 +333,6 @@ Start-Service -Name "MDT_Monitor"
 Write-Verbose "Updating Deployment Share" -Verbose
 update-MDTDeploymentShare -path "DS001:" -Force
 
-Write-Verbose "Configuring Windows Deployment Services" -Verbose
-Install-WindowsFeature wds-deployment -includemanagementtools
-$wdsUtilResults = wdsutil /initialize-server /remInst:"$WDS" /Standalone
-$wdsUtilResults | select -last 1
-Import-WdsBootImage -Path "$Target\Boot\LiteTouchPE_x64.wim"
-wdsutil.exe /Set-Server /AnswerClients:All
-wdsutil.exe /Set-Server /PxepromptPolicy /New:Noprompt
-
 Write-Verbose "Stop logging" -Verbose
 $EndDTM = (Get-Date)
 Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalSeconds) Seconds" -Verbose
