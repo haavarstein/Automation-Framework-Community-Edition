@@ -1,4 +1,4 @@
-﻿Function Set-SecureBoot {
+Function Set-SecureBoot {
     <#
     .SYNOPSIS Enable/Disable Seure Boot setting for a VM in vSphere 6.5
     .NOTES  Author:  William Lam
@@ -55,7 +55,7 @@ Clear-Host
 Write-Verbose "Setting Arguments" -Verbose
 $StartDTM = (Get-Date)	
 
-$MyConfigFileloc = ("C:\Source\Examples\VMware\Settings.xml")
+$MyConfigFileloc = ("Settings.xml")
 [xml]$MyConfigFile = (Get-Content $MyConfigFileLoc)
 
 $VCenter = $MyConfigFile.Post.VCenter
@@ -77,36 +77,12 @@ if (!(Get-Module -ListAvailable -Name VMware.PowerCLI)) {Install-Module -Name VM
 
 # Add Module
 Import-Module VMware.DeployAutomation
-Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -Confirm:$false
-Set-PowerCLIConfiguration -Scope User -InvalidCertificateAction Ignore -Confirm:$false
+Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -Confirm:$false | Out-Null
+Set-PowerCLIConfiguration -Scope User -InvalidCertificateAction Ignore -Confirm:$false | Out-Null
 
 # Connect to vCenter Server
-Connect-viserver $VCenter -user $VCUser -password $VCPwd -WarningAction 0
+Connect-viserver $VCenter -user $VCUser -password $VCPwd -WarningAction 0 | Out-Null
 
-# DC-01
-
-$VMName = "DC-01"
-$MAC = "00:50:56:00:50:01"
-$VRAM = 2048
-$VCPU = 2
-$VMDiskGB = 40
-
-$LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
-Start-Transcript $LogPS | Out-Null
-
-New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
-Start-Sleep -s 15
-Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
-
-$VM = Get-VM $VMName
-$spec = New-Object VMware.Vim.VirtualMachineConfigSpec
-$spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
-$vm.ExtensionData.ReconfigVM($spec)
-Get-VM -Name $VMName | Set-SecureBoot -Enabled
-Start-Sleep -s 15
-Start-VM -VM $VMName -confirm:$false -RunAsync
-
-Start-Sleep -s 1500
 
 # DC-02
 
@@ -116,41 +92,39 @@ $VRAM = 2048
 $VCPU = 2
 $VMDiskGB = 40
 
-$LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
-Start-Transcript $LogPS
-
-New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
-Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
+Write-Verbose "Creating $VMName" -Verbose
+New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName -CD | Out-Null
+Get-VM $VMName | Get-CDDrive | Set-CDDrive -ISOPath $ISO -StartConnected:$true -Confirm:$false | Out-Null
+Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false | Out-Null
 
 $VM = Get-VM $VMName
 $spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
 $vm.ExtensionData.ReconfigVM($spec)
-Get-VM -Name $VMName | Set-SecureBoot -Enabled
-Start-Sleep -s 15
-Start-VM -VM $VMName -confirm:$false -RunAsync
+Get-VM -Name $VMName | Set-SecureBoot -Enabled | Out-Null
+Write-Verbose "Starting $VMName" -Verbose
+Start-VM -VM $VMName -confirm:$false -RunAsync | Out-Null
 
 # RAS-WS19-GW
 
 $VMName = "RAS-WS19-GW"
 $MAC = "00:50:56:00:50:04"
-$VRAM = 2048
+$VRAM = 4096
 $VCPU = 2
 $VMDiskGB = 40
 
-$LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
-Start-Transcript $LogPS
-
-New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
-Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
+Write-Verbose "Creating $VMName" -Verbose
+New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName -CD | Out-Null
+Get-VM $VMName | Get-CDDrive | Set-CDDrive -ISOPath $ISO -StartConnected:$true -Confirm:$false | Out-Null
+Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false | Out-Null
 
 $VM = Get-VM $VMName
 $spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
 $vm.ExtensionData.ReconfigVM($spec)
-Get-VM -Name $VMName | Set-SecureBoot -Enabled
-Start-Sleep -s 15
-Start-VM -VM $VMName -confirm:$false -RunAsync
+Get-VM -Name $VMName | Set-SecureBoot -Enabled | Out-Null
+Write-Verbose "Starting $VMName" -Verbose
+Start-VM -VM $VMName -confirm:$false -RunAsync | Out-Null
 
 # RAS-WS19-01
 
@@ -160,19 +134,18 @@ $VRAM = 4096
 $VCPU = 2
 $VMDiskGB = 60
 
-$LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
-Start-Transcript $LogPS
-
-New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
-Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
+Write-Verbose "Creating $VMName" -Verbose
+New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName -CD | Out-Null
+Get-VM $VMName | Get-CDDrive | Set-CDDrive -ISOPath $ISO -StartConnected:$true -Confirm:$false | Out-Null
+Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false | Out-Null
 
 $VM = Get-VM $VMName
 $spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
 $vm.ExtensionData.ReconfigVM($spec)
-Get-VM -Name $VMName | Set-SecureBoot -Enabled
-Start-Sleep -s 15
-Start-VM -VM $VMName -confirm:$false -RunAsync
+Get-VM -Name $VMName | Set-SecureBoot -Enabled | Out-Null
+Write-Verbose "Starting $VMName" -Verbose
+Start-VM -VM $VMName -confirm:$false -RunAsync | Out-Null
 
 # MDT-01
 
@@ -182,44 +155,19 @@ $VRAM = 6144
 $VCPU = 2
 $VMDiskGB = 150
 
-$LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
-Start-Transcript $LogPS
-
-New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
-Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
-
-$VM = Get-VM $VMName
-$spec = New-Object VMware.Vim.VirtualMachineConfigSpec
-$spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
-$vm.ExtensionData.ReconfigVM($spec)
-Get-VM -Name $VMName | Set-SecureBoot -Enabled
-Start-Sleep -s 15
-Start-VM -VM $VMName -confirm:$false -RunAsync
-
-# MDT-01
-
-$VMName = "CA-01"
-$MAC = "00:50:56:00:50:06"
-$VRAM = 2048
-$VCPU = 2
-$VMDiskGB = 40
-
-$LogPS = "${env:SystemRoot}" + "\Temp\$VMName.log"
-Start-Transcript $LogPS
-
-New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName
-Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false
+Write-Verbose "Creating $VMName" -Verbose
+New-VM -Name $VMName -VMHost $ESXi -numcpu $VCPU -MemoryMB $VRAM -DiskGB $VMDiskGB -DiskStorageFormat $VMDiskType -Datastore $VMDS -GuestId $VMGuestOS -NetworkName $NetName -CD | Out-Null
+Get-VM $VMName | Get-CDDrive | Set-CDDrive -ISOPath $ISO -StartConnected:$true -Confirm:$false | Out-Null
+Get-VM $VMName | Get-NetworkAdapter | Set-NetworkAdapter -Type $NICType -MacAddress $MAC -StartConnected:$true -Confirm:$false | Out-Null
 
 $VM = Get-VM $VMName
 $spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
 $vm.ExtensionData.ReconfigVM($spec)
-Get-VM -Name $VMName | Set-SecureBoot -Enabled
-Start-Sleep -s 15
-Start-VM -VM $VMName -confirm:$false -RunAsync
+Get-VM -Name $VMName | Set-SecureBoot -Enabled | Out-Null
+Write-Verbose "Starting $VMName" -Verbose
+Start-VM -VM $VMName -confirm:$false -RunAsync | Out-Null
 
-Write-Verbose "Stop logging" -Verbose
 $EndDTM = (Get-Date)
 Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalSeconds) Seconds" -Verbose
 Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalMinutes) Minutes" -Verbose
-Stop-Transcript
