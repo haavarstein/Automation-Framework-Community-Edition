@@ -1,14 +1,14 @@
 <POST>
-	<VCenter>10.100.130.32</VCenter>
+	<VCenter>192.168.10.199</VCenter>
 	<VCUser>root</VCUser>
 	<VCPwd></VCPwd>
 	<VMDiskType>Thin</VMDiskType>
-	<VMDS>ESXi-02-SSD</VMDS>
-	<VMCluster>LAB</VMCluster>
-	<VMFolder>DEV</VMFolder>
+	<VMDS>SSD</VMDS>
+	<VMCluster>Cluster</VMCluster>
+	<VMFolder></VMFolder>
 	<NICType>Vmxnet3</NICType>
-	<NetName>LAN</NetName>
-	<ISO></ISO>
-	<ESXi>10.100.130.32</ESXi>	
+	<NetName>VCSA Network</NetName>
+	<ISO>[SSD]ISO\HYDRATION_UEFI.iso</ISO>
+	<ESXi>192.168.10.199</ESXi>	
 	<VMGuestOS>windows2019srv_64Guest</VMGuestOS>	
 </POST>
