@@ -19,3 +19,7 @@ Automated Deployment of VMware VCSA 6.7
 5. CD C:\VCSA\vcsa-cli-installer\win32
 6. vcsa-deploy.exe install --no-ssl-certificate-verification --accept-eula --acknowledge-ceip C:\VCSA\vcsa-cli-installer\VCSA-Internal-67.json
 7. After ping test - Add A Record with PTR for the VCSA FQDN name. I'm using vcsa.ctxlab.local on 192.168.1.200
+
+Automated Deployment of VMware VCSA 7.0
+
+vcsa-deploy.exe install --no-esx-ssl-verify --accept-eula --acknowledge-ceip C:\VCSA\vcsa-cli-installer\VCSA7.json
