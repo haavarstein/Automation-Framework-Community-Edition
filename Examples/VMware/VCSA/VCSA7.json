@@ -1,0 +1,68 @@
+{
+    "__version": "2.13.0",
+    "new_vcsa": {
+        "esxi": {
+            "hostname": "192.168.10.199",
+            "username": "root",
+            "password": "",
+            "deployment_network": "VCSA Network",
+            "datastore": "SSD"
+        },
+        "appliance": {
+            "thin_disk_mode": true,
+            "deployment_option": "small",
+            "name": "VCSA"
+        },
+        "network": {
+            "ip_family": "ipv4",
+            "mode": "static",
+            "ip": "192.168.10.200",
+            "dns_servers": [
+                "192.168.10.10"
+            ],
+            "prefix": "24",
+            "gateway": "192.168.10.1",
+            "system_name": "192.168.10.200"
+        },
+        "os": {
+            "password": "",
+            "ntp_servers": "time.nist.gov",
+            "ssh_enable": true
+        },
+        "sso": {
+            "password": "",
+            "domain_name": "vsphere.local"
+        }
+    },
+    "ceip": {
+        "description": {
+            "__comments": [
+                "++++VMware Customer Experience Improvement Program (CEIP)++++",
+                "VMware's Customer Experience Improvement Program (CEIP) ",
+                "provides VMware with information that enables VMware to ",
+                "improve its products and services, to fix problems, ",
+                "and to advise you on how best to deploy and use our ",
+                "products. As part of CEIP, VMware collects technical ",
+                "information about your organization's use of VMware ",
+                "products and services on a regular basis in association ",
+                "with your organization's VMware license key(s). This ",
+                "information does not personally identify any individual. ",
+                "",
+                "Additional information regarding the data collected ",
+                "through CEIP and the purposes for which it is used by ",
+                "VMware is set forth in the Trust & Assurance Center at ",
+                "http://www.vmware.com/trustvmware/ceip.html . If you ",
+                "prefer not to participate in VMware's CEIP for this ",
+                "product, you should disable CEIP by setting ",
+                "'ceip_enabled': false. You may join or leave VMware's ",
+                "CEIP for this product at any time. Please confirm your ",
+                "acknowledgement by passing in the parameter ",
+                "--acknowledge-ceip in the command line.",
+                "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            ]
+        },
+        "settings": {
+            "ceip_enabled": true
+        }
+    }
+}
