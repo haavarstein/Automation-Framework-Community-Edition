@@ -55,7 +55,7 @@ Clear-Host
 Write-Verbose "Setting Arguments" -Verbose
 $StartDTM = (Get-Date)	
 
-$MyConfigFileloc = ("Settings.xml")
+$MyConfigFileloc = ("C:\Source\Examples\VMware\Settings.xml")
 [xml]$MyConfigFile = (Get-Content $MyConfigFileLoc)
 
 $VCenter = $MyConfigFile.Post.VCenter
