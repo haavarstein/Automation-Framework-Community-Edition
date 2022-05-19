@@ -65,7 +65,7 @@ Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 # Microsoft Deployment Toolkit
 $Vendor = "Microsoft"
 $Product = "Deployment Toolkit"
-$Version = "6.3.8443.1000"
+$Version = "6.3.8456.1000"
 $uri = "https://download.microsoft.com/download/3/3/9/339BE62D-B4B8-4956-B58D-73C4685FC492/MicrosoftDeploymentToolkit_x64.msi"
 $PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
 $LogApp = "${env:SystemRoot}" + "\Temp\$PackageName.log"
