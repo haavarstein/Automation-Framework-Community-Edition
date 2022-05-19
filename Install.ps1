@@ -28,11 +28,11 @@ Write-Verbose "Disable IE Security" -Verbose
 reg add "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}" /v IsInstalled /t REG_DWORD /d 0 /f
 reg add "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}" /v IsInstalled /t REG_DWORD /d 0 /f
 
-# Windows ADK for Windows 10
+# Windows ADK for Windows 11
 $Vendor = "Microsoft"
-$Product = "ADK for Windows 10"
-$Version = "2004"
-$uri = "https://go.microsoft.com/fwlink/?linkid=2120254"
+$Product = "ADK for Windows 11"
+$Version = "10.1.22000.1"
+$uri = "https://go.microsoft.com/fwlink/?linkid=2165884"
 $PackageName = "adksetup.exe"
 $UnattendedArgs1 = '/quiet /layout .\'
 $UnattendedArgs2 = '/Features OptionId.DeploymentTools /norestart /quiet /ceip off'
@@ -53,8 +53,8 @@ Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 
 $Vendor = "Microsoft"
 $Product = "Windows PE add-on for ADK"
-$Version = "2004"
-$uri = "https://go.microsoft.com/fwlink/?linkid=2120253"
+$Version = "10.1.22000.1"
+$uri = "https://go.microsoft.com/fwlink/?linkid=2166133"
 $PackageName = "adkwinpesetup.exe"
 $UnattendedArgs = '/Features OptionId.WindowsPreinstallationEnvironment /norestart /quiet /ceip off'
 
