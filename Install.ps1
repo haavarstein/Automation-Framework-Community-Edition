@@ -162,7 +162,7 @@ New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root $Target -NetworkPath "
 
 # Use Windows 2022 Evaluation WIM
 Import-MDTOperatingSystem -Path "DS001:\Operating Systems" -SourcePath "$Drive" -DestinationFolder "Windows 2022 X64"
-$OSGUID = (Get-ItemProperty "DS001:\Operating Systems\Windows Server 2022 SERVERSTANDARD in Windows Server 2022 x64 install.wim").guid
+$OSGUID = (Get-ItemProperty "DS001:\Operating Systems\Windows Server 2022 SERVERSTANDARD in*.wim").guid
 
 Write-Verbose "Creating Task Sequences" -Verbose
 Import-MDTTaskSequence -Path "DS001:\Task Sequences" -Name "Windows 2022 x64 - Standard" -Template "Server.xml" -Comments "" -ID "CTS-001" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Windows Server 2022 SERVERSTANDARD in Windows Server 2022 x64 install.wim" -FullName "xenappblog" -OrgName "xenappblog" -HomePage "https://xenappblog.com/blog" -Verbose
