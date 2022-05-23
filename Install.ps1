@@ -260,7 +260,7 @@ cmd /C "xcopy $Source\Applications-master $Target\Applications\ /h/i/c/k/e/r/y/q
 Write-Verbose "Customizing CS and Bootstrap" -Verbose
 $ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select-Object -ExpandProperty IPV4Address
 $ip = $ipV4.IPAddressToString
-$Host = $env:ComputerName
+$MDTServer = $env:ComputerName
 $File = "$Target\Control\CustomSettings.ini"
 Add-Content $File "WindowsUpdate=False"
 Add-Content $File ""
@@ -273,8 +273,8 @@ Add-Content $File "SkipFinalSummary=YES"
 Add-Content $File "AdminPassword=P@ssw0rd"
 Add-Content $File "SkipApplications=YES"
 Add-Content $File "FinishAction=REBOOT"
-Add-Content $File "EventService=http://$ip:9800"
-Add-Content $File "SLSHARE=\\$Host\logs$"
+Add-Content $File "EventService=http://$MDTServer:9800"
+Add-Content $File "SLSHARE=\\$MDTServer\logs$"
 
 $default = Get-Content $File
 $default.Replace('SkipAdminPassword=NO','SkipAdminPassword=YES') | Out-File $File -Encoding ascii
@@ -288,7 +288,7 @@ Add-Content $File "[Settings]"
 Add-Content $File "Priority=Default"
 Add-Content $File ""
 Add-Content $File "[Default]"
-Add-Content $File "DeployRoot=\\$Host\$Share"
+Add-Content $File "DeployRoot=\\$MDTServer\$Share"
 Add-Content $File ""
 Add-Content $File "UserID=Administrator"
 Add-Content $File "UserPassword=P@ssw0rd"
@@ -302,7 +302,7 @@ $xml.Settings.'Boot.x64.SelectionProfile' = "WinPE 5.0 x64"
 $xml.Settings.'Boot.x64.FeaturePacks' = "winpe-mdac,winpe-netfx,winpe-powershell"
 $xml.Settings.'Boot.x64.ExtraDirectory' = "%DEPLOYROOT%\Applications\Extras\x64"
 $xml.Settings.'SupportX86' = "False"
-$xml.Settings.'UNCPath' = "\\$Host\$Share"
+$xml.Settings.'UNCPath' = "\\$MDTServer\$Share"
 $xml.Save($xmlfile)
 
 Write-Verbose "Setting Correct OS for all Task Sequences" -Verbose
