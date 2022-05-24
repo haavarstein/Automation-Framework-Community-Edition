@@ -2,10 +2,10 @@
     "__version": "2.13.0",
     "new_vcsa": {
         "esxi": {
-            "hostname": "192.168.10.199",
+            "hostname": "192.168.1.31",
             "username": "root",
-            "password": "",
-            "deployment_network": "VCSA Network",
+            "password": "Xenappadmin2020!",
+            "deployment_network": "vLAN11",
             "datastore": "SSD"
         },
         "appliance": {
@@ -16,22 +16,21 @@
         "network": {
             "ip_family": "ipv4",
             "mode": "static",
-			"system_name": "vcsa.desktopanywhere.io",
-            "ip": "192.168.10.200",
+            "ip": "192.168.11.200",
             "dns_servers": [
-                "192.168.10.10",
-				"1.1.1.1"			
+                "192.168.11.10"
             ],
             "prefix": "24",
-            "gateway": "192.168.10.1"
+            "gateway": "192.168.11.1",
+            "system_name": "vcsa.desktopanywhere.io"
         },
         "os": {
-            "password": "",
+            "password": "Xenappadmin2020!",
             "ntp_servers": "time.nist.gov",
             "ssh_enable": true
         },
         "sso": {
-            "password": "",
+            "password": "Xenappadmin2020!",
             "domain_name": "vsphere.local"
         }
     },
