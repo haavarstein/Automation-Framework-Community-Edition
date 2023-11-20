@@ -79,7 +79,7 @@ Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 $Vendor = "Microsoft"
 $Product = "System Center 2012 R2 Configuration Manager Toolkit"
 $Version = "4.00.6221.1035"
-$uri = "https://download.microsoft.com/download/5/0/8/508918E1-3627-4383-B7D8-AA07B3490D21/ConfigMgrTools.msi"
+$uri = "https://xenapptraining.s3.amazonaws.com/a4645802-b38a-4c7b-a24b-91fa593f4657/ConfigMgrTools.msi"
 $PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
 $LogApp = "${env:SystemRoot}" + "\Temp\$PackageName.log"
 $UnattendedArgs = "/i $PackageName ALLUSERS=1 /qn /liewa $LogApp"
