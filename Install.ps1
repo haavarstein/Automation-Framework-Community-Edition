@@ -133,8 +133,8 @@ Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 # NotePad ++
 $Vendor = "Misc"
 $Product = "Notepad++"
-$Version = "8.4.1"
-$uri = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.1/npp.8.4.1.Installer.x64.exe"
+$Version = "8.5.8"
+$uri = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.8/npp.8.5.8.Installer.x64.exe"
 $PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
 $UnattendedArgs = '/S'
 
