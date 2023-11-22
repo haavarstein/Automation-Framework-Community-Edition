@@ -257,6 +257,9 @@ Invoke-WebRequest -Uri $uri -OutFile "$Source\$PackageName"
 Expand-Archive -Path $PackageName -DestinationPath . -Force
 cmd /C "xcopy $Source\Applications-master $Target\Applications\ /h/i/c/k/e/r/y/q"
 
+Write-Verbose "Copying Application Control XML files" -Verbose
+copy-item $Source\Control\*.xml $Target\Control -Force
+
 Write-Verbose "Customizing CS and Bootstrap" -Verbose
 $ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select-Object -ExpandProperty IPV4Address
 $ip = $ipV4.IPAddressToString
